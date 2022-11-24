@@ -1,0 +1,15 @@
+D:\Practice\CleanArchitecture\App.Application\bin\Debug\net6.0\App.Application.deps.json
+D:\Practice\CleanArchitecture\App.Application\bin\Debug\net6.0\App.Application.dll
+D:\Practice\CleanArchitecture\App.Application\bin\Debug\net6.0\App.Application.pdb
+D:\Practice\CleanArchitecture\App.Application\bin\Debug\net6.0\App.Domain.dll
+D:\Practice\CleanArchitecture\App.Application\bin\Debug\net6.0\App.Domain.pdb
+D:\Practice\CleanArchitecture\App.Application\obj\Debug\net6.0\App.Application.csproj.AssemblyReference.cache
+D:\Practice\CleanArchitecture\App.Application\obj\Debug\net6.0\App.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\Practice\CleanArchitecture\App.Application\obj\Debug\net6.0\App.Application.AssemblyInfoInputs.cache
+D:\Practice\CleanArchitecture\App.Application\obj\Debug\net6.0\App.Application.AssemblyInfo.cs
+D:\Practice\CleanArchitecture\App.Application\obj\Debug\net6.0\App.Application.csproj.CoreCompileInputs.cache
+D:\Practice\CleanArchitecture\App.Application\obj\Debug\net6.0\App.Application.csproj.CopyComplete
+D:\Practice\CleanArchitecture\App.Application\obj\Debug\net6.0\App.Application.dll
+D:\Practice\CleanArchitecture\App.Application\obj\Debug\net6.0\refint\App.Application.dll
+D:\Practice\CleanArchitecture\App.Application\obj\Debug\net6.0\App.Application.pdb
+D:\Practice\CleanArchitecture\App.Application\obj\Debug\net6.0\ref\App.Application.dll
