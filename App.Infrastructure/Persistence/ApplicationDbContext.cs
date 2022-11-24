@@ -1,4 +1,5 @@
 ﻿using App.Application.Services;
+using App.Domain.Entities;
 using App.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -25,12 +26,19 @@ namespace App.Infrastructure.Persistence
         public  DbSet<ApplicationUser> Users { get; set; }
         public  DbSet<ApplicationRole> Roles { get; set; }
         public  DbSet<ApplicationUserRole> UserRoles { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<User> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            //builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
             builder.Entity<ApplicationUser>()
                     .HasKey(x => x.Id);
 
@@ -43,6 +51,9 @@ namespace App.Infrastructure.Persistence
 
             builder.Entity<ApplicationUserRole>()
                     .ToTable("AspNetUserRoles");
+
+            builder.Entity<User>()
+                    .ToTable("Customers");
 
             builder.Entity<ApplicationUserRole>(userRole =>
             {
@@ -72,7 +83,12 @@ namespace App.Infrastructure.Persistence
 
                         aur.HasOne(aur => aur.User)
                             .WithMany(au => au.UserRoles);
-                    });                              
+                    });    
+            
+            // mapping entites relationship
+
+
+
         }
     }
 }

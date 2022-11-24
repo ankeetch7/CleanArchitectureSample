@@ -1990,6 +1990,7 @@
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "App.Domain": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "6.0.11",
           "System.IdentityModel.Tokens.Jwt": "6.21.0"
         },
         "compile": {
