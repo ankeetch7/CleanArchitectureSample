@@ -10,10 +10,11 @@ namespace App.Application.Services
 {
     public interface IApplicationDbContext
     {
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<ProductCategory> ProductCategories { get; set; }
-        public DbSet<OrderDetail> OrderDetails { get; set; }
+         DbSet<Product> Products { get; set; }
+         DbSet<Order> Orders { get; set; }
+         DbSet<Category> Categories { get; set; }
+         DbSet<ProductCategory> ProductCategories { get; set; }
+         DbSet<OrderDetail> OrderDetails { get; set; }
+         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

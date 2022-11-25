@@ -1,4 +1,5 @@
 ﻿using App.Domain.Common;
+using App.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace App.Domain.Entities
         public decimal SellingUnitPrice { get; set; }
         public int Quantity { get; set; }
         public string Image { get; set; }
+        public ProductStatus ProductStatus { get; set; }
         public ICollection<ProductCategory> ProductCategories { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }
 

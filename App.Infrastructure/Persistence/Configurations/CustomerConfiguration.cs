@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructure.Persistence.Configurations
 {
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<Customer> builder)
         {
             builder.HasKey(x => x.Id);
 
@@ -40,7 +40,7 @@ namespace App.Infrastructure.Persistence.Configurations
 
             builder.HasMany(u => u.Orders)
                     .WithOne(o => o.User)
-                    .HasForeignKey(o => o.UserId)
+                    .HasForeignKey(o => o.CustomerId)
                     .OnDelete(DeleteBehavior.Cascade);
         }
     }

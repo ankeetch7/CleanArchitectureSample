@@ -1,5 +1,7 @@
 ﻿using App.Application.Command.ApplicationUser;
 using App.Application.Services;
+using App.Domain.Constants;
+using App.Domain.Enums;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -21,12 +23,20 @@ namespace App.WebUI.Services
 
         public List<Claim> GetClaims(AppUser identityUser)
         {
-            return new List<Claim>
+            var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, identityUser.Id),
                 new Claim(JwtRegisteredClaimNames.UniqueName, identityUser.FullName),
-                new Claim(JwtRegisteredClaimNames.Email, identityUser.Email)
+                new Claim(JwtRegisteredClaimNames.Email, identityUser.Email),
+                new Claim(Constant.UserName, identityUser.UserName),
+                new Claim(Constant.UserType, identityUser.UserType.ToString()),
             };
+            if(identityUser.UserType == UserType.User)
+            {
+                claims.Add(new Claim(Constant.CustomerId, identityUser.CustomerId));
+            }
+
+            return claims;
         }
 
         public JwtSecurityToken GenerateToken(List<Claim> userClaims)

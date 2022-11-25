@@ -1,5 +1,8 @@
 ﻿using App.Application.Command.ApplicationUser;
+using App.Application.Interfaces;
 using App.Application.Services;
+using App.Domain.Entities;
+using App.Domain.Enums;
 using App.Infrastructure.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -17,18 +20,39 @@ namespace App.WebUI.API_Controller
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        private readonly IUnitOfWork _unitOfWork;
         public AccountController(UserManager<ApplicationUser> userManager,
                                  SignInManager<ApplicationUser> signInManager,
-                                 IJwtTokenGenerator jwtTokenGenerator)
+                                 IJwtTokenGenerator jwtTokenGenerator,
+                                 IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtTokenGenerator = jwtTokenGenerator;
+            _unitOfWork = unitOfWork;
         }
+
         [HttpPost("create-user")]
         [AllowAnonymous]
         public async Task<ActionResult<string>> CreateUser([FromBody] CreateApplicationUserCommand command)
         {
+            var customer = new Customer
+            {
+                Id = Guid.NewGuid(),
+                FullName = command.FullName,
+                Email = command.Email,
+                Phone = command.PhoneNumber,
+                Gender = command.Gender,
+                DateOfBirth = command.DateOfBirth,
+                Address = command.Address
+            };
+
+            if (command.UserType is UserType.User)
+            {
+                _unitOfWork.Customers.Add(customer);
+                await _unitOfWork.SaveChangesAsync();
+            }
+
             var user = new ApplicationUser
             {
                 Id = Guid.NewGuid().ToString(),
@@ -38,7 +62,11 @@ namespace App.WebUI.API_Controller
                 PhoneNumber = command.PhoneNumber,
                 UserType = command.UserType,
                 IsActive = command.IsActive,
-                Image = command.Image
+                Gender = command.Gender,
+                DateOfBirth = command.DateOfBirth,
+                Image = command.Image,
+                Address = command.Address,
+                CustomerId = command.UserType is UserType.User ? customer.Id : null,
             };
 
             IdentityResult result = await _userManager.CreateAsync(user,command.Password);
@@ -46,10 +74,11 @@ namespace App.WebUI.API_Controller
             if (!result.Succeeded)
                 return BadRequest();
 
-            return Ok(user);
+            return Ok(user.Id);
         }
 
         [HttpPost("authenticate-user")]
+        [AllowAnonymous]
         public async Task<IActionResult> AuthenticateUser([FromBody] AuthenticateRequest request)
         {
             var identityUser = await _userManager.FindByNameAsync(request.UserName);
@@ -68,7 +97,8 @@ namespace App.WebUI.API_Controller
                 FullName = identityUser.FullName,
                 UserName = identityUser.UserName,
                 Email = identityUser.Email,
-                PhoneNumber = identityUser.PhoneNumber,
+                UserType = identityUser.UserType,
+                CustomerId = identityUser.CustomerId.ToString()
             };
 
             var securitToken = _jwtTokenGenerator.GetToken(user);

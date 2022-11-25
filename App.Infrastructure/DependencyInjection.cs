@@ -1,6 +1,8 @@
-﻿using App.Application.Services;
+﻿using App.Application.Interfaces;
+using App.Application.Services;
 using App.Infrastructure.Identity;
 using App.Infrastructure.Persistence;
+using App.Infrastructure.UOW;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +21,8 @@ namespace App.Infrastructure
             });
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+
+            services.AddTransient<IUnitOfWork,UnitOfWork>();
 
             services.AddIdentity<ApplicationUser,ApplicationRole>(options =>
             {

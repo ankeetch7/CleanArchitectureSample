@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "XrUe7nylbp3/M7iDLF72tdjWV6A9I2stR5eWlabW9xw=",
+  "Hash": "E2O6gzz61/p8D7TIlJdTot5MlpTJ+Z18eNJIMONqSak=",
   "Source": "App.WebUI",
   "BasePath": "_content/App.WebUI",
   "Mode": "Default",
@@ -1069,6 +1069,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "D:\\Practice\\CleanArchitecture\\App.WebUI\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\App.WebUI.bundle.scp.css"
+    },
+    {
+      "Identity": "D:\\Practice\\CleanArchitecture\\App.WebUI\\wwwroot\\api\\specification.json",
+      "SourceId": "App.WebUI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Practice\\CleanArchitecture\\App.WebUI\\wwwroot\\",
+      "BasePath": "_content/App.WebUI",
+      "RelativePath": "api/specification.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\api\\specification.json"
     },
     {
       "Identity": "D:\\Practice\\CleanArchitecture\\App.WebUI\\wwwroot\\css\\site.css",

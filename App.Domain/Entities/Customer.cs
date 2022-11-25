@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace App.Domain.Entities
 {
-    public class User : AuditableEntity
+    public class Customer : AuditableEntity
     {
         public Guid Id { get; set; }
         public string FullName { get; set; }

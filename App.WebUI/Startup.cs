@@ -2,9 +2,12 @@
 using App.Infrastructure;
 using App.Infrastructure.Persistence;
 using App.WebUI.Services;
+using App.WebUI.StartupServices.AddSwaggerService;
+using App.WebUI.StartupServices.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace App.WebUI
 {
@@ -20,47 +23,26 @@ namespace App.WebUI
         {
             services.AddMvc();
             services.AddControllers();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                    .AddJsonOptions(options =>
+                        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+                        ); 
             services.AddHttpContextAccessor();
 
             services.AddHealthChecks()
                     .AddDbContextCheck<ApplicationDbContext>();
+
             // add dependency injection
             services.AddInfrastructureServices(_configuration);
             services.AddSingleton<IJwtTokenGenerator,JwtTokenGenerator>();
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
-            //for swagger
-            services.AddSwaggerDocument(document =>
-            {
-                document.Title = "Clean Architecture Web API Project";
-                document.Version = "v1";
-            });
+            // swagger services
+            services.AddSwaggerConfigureServices();
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["TokenDefination:JwtKey"])),
-
-                    ValidateIssuer = true,
-                    ValidIssuer = _configuration["TokenDefination:JwtIssuer"],
-
-                    ValidateAudience = true,
-                    ValidAudience = _configuration["TokenDefination:JwtAudience"],
-
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero,
-                };
-            });
-
+           // add authentication
+           services.AddAuthenticationConfigureService(_configuration);
+            
         }
         public void Configure(WebApplication app, IWebHostEnvironment env)
         {
@@ -81,16 +63,19 @@ namespace App.WebUI
 
             app.UseHttpsRedirection();
 
+            app.UseCors(cors =>
+            {
+                cors.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin();
+            });
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
-            app.UseOpenApi();
-            app.UseSwaggerUi3(swagger =>
-            {
-                swagger.Path = "/api";
-            });
-            
+            app.UseSwaggerConfigure();
+
             app.UseAuthentication();
 
             app.UseAuthorization();

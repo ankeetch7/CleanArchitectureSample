@@ -16,5 +16,12 @@ namespace App.Domain.Entities
         public Product Product { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
+
+        public void UpdateProductQuantity(Product product, int quantity)
+        {
+            Product = product;
+            product.Quantity -= quantity;
+        }
     }
+
 }

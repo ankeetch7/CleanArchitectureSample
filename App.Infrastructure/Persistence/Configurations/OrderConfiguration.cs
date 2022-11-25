@@ -16,6 +16,7 @@ namespace App.Infrastructure.Persistence.Configurations
             builder.HasKey(o => o.Id);
 
             builder.Property(o => o.Amount)
+                    .HasColumnType("decimal(18,4)")
                     .IsRequired();
 
             builder.Property(o => o.OrderAddress)

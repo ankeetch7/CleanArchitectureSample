@@ -30,19 +30,23 @@ namespace App.Infrastructure.Persistence.Configurations
                     .IsRequired();
 
             builder.Property(p => p.SellingUnitPrice)
+                    .HasColumnType("decimal(18,4)")
                     .IsRequired();
 
             builder.Property(p => p.UnitPrice)
+                    .HasColumnType("decimal(18,4)")
                     .IsRequired();
 
             builder.HasMany(c => c.ProductCategories)
                     .WithOne(pc => pc.Product)
                     .HasForeignKey(pc => pc.ProductId)
+                    .IsRequired()
                     .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(c => c.OrderDetails)
                     .WithOne(od => od.Product)
                     .HasForeignKey(od => od.ProductId)
+                    .IsRequired()
                     .OnDelete(DeleteBehavior.Cascade);
 
         }

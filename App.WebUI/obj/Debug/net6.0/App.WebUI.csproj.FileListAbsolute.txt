@@ -1,5 +1,6 @@
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\appsettings.Development.json
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\appsettings.json
+D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\nswag.json
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\App.WebUI.staticwebassets.runtime.json
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\App.WebUI.exe
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\App.WebUI.deps.json

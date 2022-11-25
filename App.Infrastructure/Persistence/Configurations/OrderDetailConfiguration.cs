@@ -14,6 +14,10 @@ namespace App.Infrastructure.Persistence.Configurations
         public void Configure(EntityTypeBuilder<OrderDetail> builder)
         {
             builder.HasKey(od => od.Id);
+
+            builder.Property(od => od.Price)
+                    .HasColumnType("decimal(18,4)")
+                    .IsRequired();
         }
     }
 }

@@ -20,9 +20,34 @@ namespace App.Domain.Entities
         public string OrderEmail { get; set; }
         public string OrderPhone { get; set; }
         public DateTime OrderDate { get; set; }
-        public OrderStatus OrderStatus { get; set; }
-        public Guid UserId { get; set; }
-        public User User { get; set; }
+        public OrderStatus OrderStatus { get; private set; }
+        public Guid CustomerId { get; set; }
+        public Customer User { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }
+
+        public void SetOrderStatusToRequested()
+        {
+            OrderStatus = OrderStatus.OrderRequested;
+        }
+        public void SetOrderStatusToProcessing()
+        {
+            OrderStatus = OrderStatus.OrderProcessing;
+        }
+        public void SetOrderStatusToDelivered()
+        {
+            OrderStatus = OrderStatus.OrderDelivered;
+        }
+        public void SetOrderStatusToRejected()
+        {
+            OrderStatus = OrderStatus.OrderRejected;
+        }
+
+        public void CreateOrderDetail(OrderDetail orderDetail, Product product)
+        {
+            SetOrderStatusToRequested();
+            OrderDetails.Add(orderDetail);
+            orderDetail.UpdateProductQuantity(product, orderDetail.Quantity);
+        }
     }
+
 }

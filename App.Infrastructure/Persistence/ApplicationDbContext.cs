@@ -1,9 +1,11 @@
 ﻿using App.Application.Services;
+using App.Domain.Common;
 using App.Domain.Entities;
 using App.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +20,11 @@ namespace App.Infrastructure.Persistence
                                         IdentityUserClaim<string>, ApplicationUserRole, IdentityUserLogin<string>,
                                         IdentityRoleClaim<string>, IdentityUserToken<string>>, IApplicationDbContext
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        private readonly ICurrentUserService _currentUserService;
+        public ApplicationDbContext(DbContextOptions options, 
+                                    ICurrentUserService currentUserService) : base(options)
         {
-
+            _currentUserService = currentUserService;
         }
 
         public  DbSet<ApplicationUser> Users { get; set; }
@@ -31,7 +35,7 @@ namespace App.Infrastructure.Persistence
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-        public DbSet<User> Customers { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -51,9 +55,6 @@ namespace App.Infrastructure.Persistence
 
             builder.Entity<ApplicationUserRole>()
                     .ToTable("AspNetUserRoles");
-
-            builder.Entity<User>()
-                    .ToTable("Customers");
 
             builder.Entity<ApplicationUserRole>(userRole =>
             {
@@ -84,11 +85,29 @@ namespace App.Infrastructure.Persistence
                         aur.HasOne(aur => aur.User)
                             .WithMany(au => au.UserRoles);
                     });    
-            
-            // mapping entites relationship
-
-
-
         }
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            foreach (EntityEntry<AuditableEntity> entry in ChangeTracker.Entries<AuditableEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedBy = _currentUserService.UserId;
+                        entry.Entity.CreatedDate = DateTime.UtcNow;
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.LastModifiedBy = _currentUserService.UserId;
+                        entry.Entity.LastModifiedDate = DateTime.UtcNow;
+                        break;
+                    case EntityState.Deleted:
+                        entry.Entity.DeletedBy = _currentUserService.UserId;
+                        entry.Entity.DeletedDate = DateTime.UtcNow;
+                        break;
+                }
+            }
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
     }
 }
