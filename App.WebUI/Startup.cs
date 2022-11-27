@@ -4,6 +4,7 @@ using App.Infrastructure.Persistence;
 using App.WebUI.Services;
 using App.WebUI.StartupServices.AddSwaggerService;
 using App.WebUI.StartupServices.Authentication;
+using App.WebUI.StartupServicesAndMiddleware.AngularIntegration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -42,7 +43,9 @@ namespace App.WebUI
 
            // add authentication
            services.AddAuthenticationConfigureService(_configuration);
-            
+
+            //add angular
+            services.AddAngularService();
         }
         public void Configure(WebApplication app, IWebHostEnvironment env)
         {
@@ -80,9 +83,18 @@ namespace App.WebUI
 
             app.UseAuthorization();
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+            //app.MapControllerRoute(
+            //    name: "default",
+            //    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(name: "Default",
+                                             pattern: "{controller}/{action=Index}/{id?}");
+            });
+
+            // angular app
+            app.UseAngular(env);
 
             app.Run();
         }

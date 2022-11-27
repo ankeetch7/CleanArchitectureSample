@@ -1,5 +1,11 @@
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\appsettings.Development.json
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\appsettings.json
+D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\ClientApp\angular.json
+D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\ClientApp\package-lock.json
+D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\ClientApp\package.json
+D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\ClientApp\tsconfig.app.json
+D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\ClientApp\tsconfig.json
+D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\ClientApp\tsconfig.spec.json
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\nswag.json
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\App.WebUI.staticwebassets.runtime.json
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\App.WebUI.exe
@@ -14,6 +20,7 @@ D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\Microsoft.AspNetCore.Cr
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.UI.dll
+D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\Microsoft.AspNetCore.SpaServices.Extensions.dll
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll

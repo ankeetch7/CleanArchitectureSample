@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HFmMPHaodhTZ38KrmCkNBtWNaerHgBju9JAGVR8mH5Q9lWGQb/uiZZS31NT8lCZq28tKPgvD8izCJBRvYJGitQ==",
+  "dgSpecHash": "HrJo3qc7vJU/qvQ5u72qO9aEQuMzVxdIFJuoQFM2fIciafQBPxigoJGaclzed+NwnxbReGl/KSaoNf5C6koLnQ==",
   "success": true,
   "projectFilePath": "D:\\Practice\\CleanArchitecture\\App.WebUI\\App.WebUI.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,7 @@
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.aspnetcore.diagnostics.entityframeworkcore\\6.0.11\\microsoft.aspnetcore.diagnostics.entityframeworkcore.6.0.11.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\6.0.11\\microsoft.aspnetcore.identity.entityframeworkcore.6.0.11.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.aspnetcore.identity.ui\\6.0.11\\microsoft.aspnetcore.identity.ui.6.0.11.nupkg.sha512",
+    "C:\\Users\\DELL\\.nuget\\packages\\microsoft.aspnetcore.spaservices.extensions\\6.0.11\\microsoft.aspnetcore.spaservices.extensions.6.0.11.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
@@ -31,6 +32,8 @@
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.extensions.diagnostics.healthchecks.entityframeworkcore\\6.0.11\\microsoft.extensions.diagnostics.healthchecks.entityframeworkcore.6.0.11.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\6.0.0\\microsoft.extensions.fileproviders.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.extensions.fileproviders.embedded\\6.0.11\\microsoft.extensions.fileproviders.embedded.6.0.11.nupkg.sha512",
+    "C:\\Users\\DELL\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\6.0.0\\microsoft.extensions.fileproviders.physical.6.0.0.nupkg.sha512",
+    "C:\\Users\\DELL\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\6.0.0\\microsoft.extensions.filesystemglobbing.6.0.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\6.0.0\\microsoft.extensions.hosting.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.extensions.identity.core\\6.0.11\\microsoft.extensions.identity.core.6.0.11.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.extensions.identity.stores\\6.0.11\\microsoft.extensions.identity.stores.6.0.11.nupkg.sha512",
