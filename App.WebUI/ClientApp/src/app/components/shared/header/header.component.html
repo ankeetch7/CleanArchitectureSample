@@ -2,13 +2,12 @@
   <a class="navbar-brand mb-0 h1" href="#">{{greet}} {{getFullname()}}</a>
 
   <div class="d-flex p-0 m-0 ml-auto nav navbar-nav">
-    <span class="nav-item nav-link"><b>{{getUsername()}}</b></span> &nbsp;
-
     <div class="dropdown">
       <a class="btn btn-default dropdown-toggle selectedItem" style="color: white;"
         id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         <img [src]="userAvatar()" class="user-image" alt="Cinque Terre" 
         width="40" height="40">
+        <span class="nav-item nav-link"><b>{{getUsername()}}</b></span> &nbsp;
       </a>
 
     <ul class="dropdown-menu p-0 m-0 ml-auto" aria-labelledby="dropdownMenu1">

@@ -13,6 +13,7 @@ import { SidebarComponent } from './components/shared/sidebar/sidebar.component'
 import { DashboardComponent } from './components/dashboard/dashboard/dashboard.component';
 import { HomeComponent } from './components/shared/home/home.component';
 import { HeaderComponent } from './components/shared/header/header.component';
+import { ProductComponent } from './components/product/product.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { HeaderComponent } from './components/shared/header/header.component';
     DashboardComponent,
     HomeComponent,
     HeaderComponent,
+    ProductComponent,
 
 
   ],
