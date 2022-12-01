@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.main-content{
+    overflow: hidden;
+    height: 100vh;
+}
+
+.sidebar {
+    float: left;
+    width: 20%;
+}
+
+.content {
+    float: right;
+    width: 80%;
+}

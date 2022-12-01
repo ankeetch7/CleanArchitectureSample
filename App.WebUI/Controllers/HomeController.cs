@@ -15,7 +15,7 @@ namespace App.WebUI.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return Redirect("app-home");
         }
 
         public IActionResult Privacy()

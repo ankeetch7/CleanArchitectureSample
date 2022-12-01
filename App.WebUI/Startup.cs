@@ -5,9 +5,6 @@ using App.WebUI.Services;
 using App.WebUI.StartupServices.AddSwaggerService;
 using App.WebUI.StartupServices.Authentication;
 using App.WebUI.StartupServicesAndMiddleware.AngularIntegration;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace App.WebUI

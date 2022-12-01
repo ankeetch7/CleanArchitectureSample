@@ -79,7 +79,7 @@ namespace App.WebUI.API_Controller
 
         [HttpPost("authenticate-user")]
         [AllowAnonymous]
-        public async Task<IActionResult> AuthenticateUser([FromBody] AuthenticateRequest request)
+        public async Task<ActionResult<TokenResponse>> AuthenticateUser([FromBody] AuthenticateRequest request)
         {
             var identityUser = await _userManager.FindByNameAsync(request.UserName);
 
@@ -103,13 +103,18 @@ namespace App.WebUI.API_Controller
 
             var securitToken = _jwtTokenGenerator.GetToken(user);
 
-            var tokenResult = new
+            var tokenResult = new TokenResponse
             {
-                token = new JwtSecurityTokenHandler().WriteToken(securitToken),
-                expiration = securitToken.ValidTo
+                Token = new JwtSecurityTokenHandler().WriteToken(securitToken),
+                ExpiryDate = securitToken.ValidTo.ToString(),
             };
 
             return Ok(tokenResult);
         }
+    }
+    public class TokenResponse
+    {
+        public string Token { get; set; }
+        public string ExpiryDate { get; set; }
     }
 }

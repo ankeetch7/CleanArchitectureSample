@@ -1,0 +1,61 @@
+.user-image {
+    overflow: hidden;
+    height: 35px;
+    width: 35px;
+    border-radius: 50px;
+    flex: 35px 0 0;
+}
+.user-image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.selectedItem {
+    border: none !important;
+    background: none !important;
+}
+.dropdown-menu {
+    min-width: 150px;
+}
+
+ul {
+    position: absolute;
+    align-items: flex-start;
+    text-align: left;
+    background: #fff;
+    box-shadow: 0px 0px 5px #dcdcdc;
+    border-radius: 5px;
+    min-width: 150px;
+    padding: 10px 0px;
+    margin-top: 0px;
+}
+
+ul li {
+    list-style: none;
+}
+ a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+ul li {
+    padding: 0;
+    margin: 0;
+}
+
+ul li a {
+    padding: 8px 15px;
+    text-decoration: none;
+    color: #303030;
+}
+ ul li a:hover {
+    text-decoration: none;
+    background-color: rgb(226, 232, 232);
+}
+
+ul li a span {
+    padding-right: 5px;
+    font-size: 12px;
+}
