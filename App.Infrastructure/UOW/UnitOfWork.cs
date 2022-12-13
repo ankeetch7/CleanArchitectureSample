@@ -1,5 +1,6 @@
 ﻿using App.Application.Interfaces;
 using App.Application.Interfaces.IRepositories;
+using App.Application.Services;
 using App.Domain.Entities;
 using App.Infrastructure.Persistence;
 using App.Infrastructure.Repositories;
@@ -14,10 +15,11 @@ namespace App.Infrastructure.UOW
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
-
-        public UnitOfWork(ApplicationDbContext context)
+        private readonly ICurrentUserService _currentUserService;
+        public UnitOfWork(ApplicationDbContext context, ICurrentUserService currentUserService)
         {
             _context = context;
+            _currentUserService = currentUserService;
         }
         public IUserRepository _users;
         public IProductRepository _products;
@@ -41,7 +43,7 @@ namespace App.Infrastructure.UOW
             get
             {
                 if( _products is null)
-                    return new ProductRepository(_context);
+                    return new ProductRepository(_context, _currentUserService);
                 return _products;
             }
         }

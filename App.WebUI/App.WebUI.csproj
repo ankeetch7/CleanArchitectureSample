@@ -16,6 +16,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="6.0.11" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.18.0" />
     <PackageReference Include="NSwag.MSBuild" Version="13.18.0">
       <PrivateAssets>all</PrivateAssets>
@@ -35,4 +36,9 @@
 		<Exec Command="$(NSwagExe_Net60) run /variables:Configuration=$(Configuration)" />
 		<RemoveDir Directories="$(OutDir)References" />
 	</Target>
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties nswag_1json__JsonSchema="https://json.schemastore.org/pgap_yaml_input_reader.json" />
+		</VisualStudio>
+	</ProjectExtensions>
 </Project>

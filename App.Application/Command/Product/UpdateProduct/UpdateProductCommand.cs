@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Application.Command.Product
+namespace App.Application.Command.Product.UpdateProduct
 {
-    public class CreateProductCommand
+    public class UpdateProductCommand
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal UnitPrice { get; set; }

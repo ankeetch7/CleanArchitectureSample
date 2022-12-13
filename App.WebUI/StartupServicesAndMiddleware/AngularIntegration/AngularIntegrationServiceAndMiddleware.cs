@@ -14,6 +14,7 @@
         {
             app.UseSpa(spa =>
             {
+                spa.Options.SourcePath = "ClientApp";
                 if (env.IsDevelopment())
                 {
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200/");

@@ -1,3 +1,12 @@
+D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.csproj.AssemblyReference.cache
+D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.GeneratedMSBuildEditorConfig.editorconfig
+D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.AssemblyInfoInputs.cache
+D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.AssemblyInfo.cs
+D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.csproj.CoreCompileInputs.cache
+D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.MvcApplicationPartsAssemblyInfo.cs
+D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.MvcApplicationPartsAssemblyInfo.cache
+D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.RazorAssemblyInfo.cache
+D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.RazorAssemblyInfo.cs
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\appsettings.Development.json
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\appsettings.json
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\ClientApp\angular.json
@@ -13,6 +22,9 @@ D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\App.WebUI.deps.json
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\App.WebUI.runtimeconfig.json
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\App.WebUI.dll
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\App.WebUI.pdb
+D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\FluentValidation.dll
+D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
+D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\Humanizer.dll
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
@@ -80,15 +92,6 @@ D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\App.Infrastructure.dll
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\App.Infrastructure.pdb
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\App.Application.pdb
 D:\Practice\CleanArchitecture\App.WebUI\bin\Debug\net6.0\App.Domain.pdb
-D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.csproj.AssemblyReference.cache
-D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.GeneratedMSBuildEditorConfig.editorconfig
-D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.AssemblyInfoInputs.cache
-D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.AssemblyInfo.cs
-D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.csproj.CoreCompileInputs.cache
-D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.MvcApplicationPartsAssemblyInfo.cs
-D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.MvcApplicationPartsAssemblyInfo.cache
-D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.RazorAssemblyInfo.cache
-D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.RazorAssemblyInfo.cs
 D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\staticwebassets.build.json
 D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\staticwebassets.development.json
 D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
@@ -100,3 +103,8 @@ D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\refint\App.WebUI.dll
 D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.pdb
 D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\App.WebUI.genruntimeconfig.cache
 D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\ref\App.WebUI.dll
+D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\staticwebassets\msbuild.App.WebUI.Microsoft.AspNetCore.StaticWebAssets.props
+D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\staticwebassets\msbuild.build.App.WebUI.props
+D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.App.WebUI.props
+D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.App.WebUI.props
+D:\Practice\CleanArchitecture\App.WebUI\obj\Debug\net6.0\staticwebassets.pack.json

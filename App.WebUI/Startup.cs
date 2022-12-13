@@ -1,10 +1,18 @@
-﻿using App.Application.Services;
+﻿using App.Application;
+using App.Application.Command.Product.CreateProduct;
+using App.Application.Services;
 using App.Infrastructure;
 using App.Infrastructure.Persistence;
 using App.WebUI.Services;
 using App.WebUI.StartupServices.AddSwaggerService;
 using App.WebUI.StartupServices.Authentication;
 using App.WebUI.StartupServicesAndMiddleware.AngularIntegration;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Serialization;
 using System.Text.Json.Serialization;
 
 namespace App.WebUI
@@ -19,19 +27,33 @@ namespace App.WebUI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-            services.AddControllers();
-            services.AddControllersWithViews()
-                    .AddJsonOptions(options =>
-                        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
-                        ); 
+            services.AddMvc()
+                .AddFluentValidation(opt =>
+                    opt.RegisterValidatorsFromAssemblyContaining<CreateProductCommandValidator>()
+                );
+                
+
+            services.AddControllersWithViews(options =>
+            {
+                var defaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+                       .RequireAuthenticatedUser()
+                       .Build();
+
+                options.Filters.Add(new AuthorizeFilter(defaultPolicy));
+            })
+            .AddJsonOptions(options =>
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+            ); 
             services.AddHttpContextAccessor();
 
             services.AddHealthChecks()
                     .AddDbContextCheck<ApplicationDbContext>();
 
+            services.AddCors();
+
             // add dependency injection
             services.AddInfrastructureServices(_configuration);
+            services.AddApplicationDependencyInjection();
             services.AddSingleton<IJwtTokenGenerator,JwtTokenGenerator>();
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
@@ -43,6 +65,9 @@ namespace App.WebUI
 
             //add angular
             services.AddAngularService();
+
+            services.AddAuthorization();
+
         }
         public void Configure(WebApplication app, IWebHostEnvironment env)
         {
@@ -72,9 +97,10 @@ namespace App.WebUI
 
             app.UseStaticFiles();
 
-            app.UseRouting();
-
+            // available in SwaggerService class
             app.UseSwaggerConfigure();
+
+            app.UseRouting();
 
             app.UseAuthentication();
 

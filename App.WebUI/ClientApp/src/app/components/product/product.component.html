@@ -1,1 +1,88 @@
-<p>product works!</p>
+<div style="align-items: stretch;">
+    <div id="content" class="col-sm-12">
+        <div class="page-wrapper">
+            <div class="page-heading">
+                <h4>Products Lists</h4>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                  <div class="quick-filter">
+                    <input type="text" (keyup)="onQuickFilterChanged()" class="form-control"
+                           [(ngModel)]="quickSearchValue" placeholder="search..." />
+                  </div>
+                </div>
+                  <div class="d-flex p-0 m-0 ml-auto mr-3 float-right"> 
+                        <a href="javascript:;" class="btn btn-primary"  (click)="onAddNewProductPopUp()"
+                           style="text-decoration: none;">
+                          New Product
+                        </a>
+
+                  </div>
+
+              </div>
+              <br />
+                <div class="card">
+                    <div class="card-body p-0">
+                      <ag-grid-angular style="width: 100%;"
+                                       class="ag-theme-alpine"
+                                       [rowData]="productData"
+                                       [columnDefs]="productColumnDefs"
+                                       [domLayout]="domLayout"
+                                       [animateRows]="true"
+                                       [paginationPageSize]="7"
+                                       [enableCellTextSelection]="true"
+                                       [enableBrowserTooltips]="true"
+                                       [pagination]="true"
+                                       (rowClicked)="onRowClicked($event)"
+                                       (filterChanged)="onFilterChanged($event)"
+                                       (modelUpdated)="onModelUpdated()"
+                                       (gridReady)="onGridReady($event)">
+                      </ag-grid-angular>
+                    </div>
+        </div>
+    </div>
+</div>
+
+      <!-- show modal for add product -->
+      <div class="modal show" id="myModal" role="dialog" *ngIf="addProductPopUpModal"
+           style="display: block; background: rgba(0, 0, 0, 0.7)">
+        <div class="modal-dialog modal-lg " style="max-width:65%">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><b>New Product</b></h4>
+              <a type="button" class="close btn-close-modal" (click)="closePopUp()"
+                      style="color:rgb(164, 9, 9);font-size:30px; border: none;">
+                <span aria-hidden="true" class="col-md-1">&times;</span>
+            </a>
+         
+            </div>
+            <div class="modal-body">
+              <create-product (callbackProduct)="callbackProduct()"></create-product>
+            </div>
+          </div>
+        </div>
+      </div>
+
+            <!-- show modal for update product -->
+            <div class="modal show" id="myModal" role="dialog" *ngIf="updateProductPopUpModal"
+            style="display: block; background: rgba(0, 0, 0, 0.7)">
+         <div class="modal-dialog modal-lg " style="max-width:65%">
+           <!-- Modal content-->
+           <div class="modal-content">
+             <div class="modal-header">
+                 <h4 class="modal-title"><b>New Product</b></h4>
+               <a type="button" class="close btn-close-modal" (click)="closePopUp()"
+                       style="color:rgb(164, 9, 9);font-size:30px; border: none;">
+                 <span aria-hidden="true" class="col-md-1">&times;</span>
+             </a>
+          
+             </div>
+             <div class="modal-body">
+               <update-product [update-product-details]="updateProductDetails" 
+                               (callbackProduct)="callbackProduct()">
+              </update-product>
+             </div>
+           </div>
+         </div>
+       </div>

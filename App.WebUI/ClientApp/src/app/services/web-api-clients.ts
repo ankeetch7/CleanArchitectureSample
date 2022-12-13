@@ -43,7 +43,6 @@ export class AccountService implements IAccountService {
             body: content_,
             observe: "response",
             responseType: "blob",
-            withCredentials: true,
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
                 "Accept": "application/json"
@@ -74,9 +73,7 @@ export class AccountService implements IAccountService {
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as string;
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -97,7 +94,6 @@ export class AccountService implements IAccountService {
             body: content_,
             observe: "response",
             responseType: "blob",
-            withCredentials: true,
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
                 "Accept": "application/json"
@@ -128,8 +124,7 @@ export class AccountService implements IAccountService {
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = TokenResponse.fromJS(resultData200);
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as TokenResponse;
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -166,7 +161,6 @@ export class CategoryService implements ICategoryService {
         let options_ : any = {
             observe: "response",
             responseType: "blob",
-            withCredentials: true,
             headers: new HttpHeaders({
                 "Accept": "application/octet-stream"
             })
@@ -222,7 +216,6 @@ export class CategoryService implements ICategoryService {
             body: content_,
             observe: "response",
             responseType: "blob",
-            withCredentials: true,
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
                 "Accept": "application/octet-stream"
@@ -294,7 +287,6 @@ export class CustomerService implements ICustomerService {
         let options_ : any = {
             observe: "response",
             responseType: "blob",
-            withCredentials: true,
             headers: new HttpHeaders({
                 "Accept": "application/octet-stream"
             })
@@ -366,7 +358,6 @@ export class OrderService implements IOrderService {
         let options_ : any = {
             observe: "response",
             responseType: "blob",
-            withCredentials: true,
             headers: new HttpHeaders({
                 "Accept": "application/octet-stream"
             })
@@ -422,7 +413,6 @@ export class OrderService implements IOrderService {
             body: content_,
             observe: "response",
             responseType: "blob",
-            withCredentials: true,
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
                 "Accept": "application/octet-stream"
@@ -494,7 +484,6 @@ export class OrderDetailService implements IOrderDetailService {
         let options_ : any = {
             observe: "response",
             responseType: "blob",
-            withCredentials: true,
             headers: new HttpHeaders({
                 "Accept": "application/octet-stream"
             })
@@ -565,7 +554,6 @@ export class ProductCategoryService implements IProductCategoryService {
         let options_ : any = {
             observe: "response",
             responseType: "blob",
-            withCredentials: true,
             headers: new HttpHeaders({
                 "Accept": "application/octet-stream"
             })
@@ -613,8 +601,10 @@ export class ProductCategoryService implements IProductCategoryService {
 }
 
 export interface IProductService {
-    getAllProducts(): Observable<FileResponse>;
+    getAllProducts(): Observable<ProductVm[]>;
     createProduct(command: CreateProductCommand): Observable<FileResponse>;
+    updateProduct(command: UpdateProductCommand): Observable<FileResponse>;
+    deleteProduct(id: string): Observable<FileResponse>;
 }
 
 @Injectable({
@@ -630,16 +620,15 @@ export class ProductService implements IProductService {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    getAllProducts(): Observable<FileResponse> {
+    getAllProducts(): Observable<ProductVm[]> {
         let url_ = this.baseUrl + "/api/Product/get-all-products";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
             observe: "response",
             responseType: "blob",
-            withCredentials: true,
             headers: new HttpHeaders({
-                "Accept": "application/octet-stream"
+                "Accept": "application/json"
             })
         };
 
@@ -650,37 +639,32 @@ export class ProductService implements IProductService {
                 try {
                     return this.processGetAllProducts(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<FileResponse>;
+                    return _observableThrow(e) as any as Observable<ProductVm[]>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<FileResponse>;
+                return _observableThrow(response_) as any as Observable<ProductVm[]>;
         }));
     }
 
-    protected processGetAllProducts(response: HttpResponseBase): Observable<FileResponse> {
+    protected processGetAllProducts(response: HttpResponseBase): Observable<ProductVm[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (response as any).error instanceof Blob ? (response as any).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
-            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
-            if (fileName) {
-                fileName = decodeURIComponent(fileName);
-            } else {
-                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            }
-            return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as ProductVm[];
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse>(null as any);
+        return _observableOf<ProductVm[]>(null as any);
     }
 
     createProduct(command: CreateProductCommand): Observable<FileResponse> {
@@ -693,7 +677,6 @@ export class ProductService implements IProductService {
             body: content_,
             observe: "response",
             responseType: "blob",
-            withCredentials: true,
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
                 "Accept": "application/octet-stream"
@@ -739,71 +722,120 @@ export class ProductService implements IProductService {
         }
         return _observableOf<FileResponse>(null as any);
     }
-}
 
-export class CreateApplicationUserCommand implements ICreateApplicationUserCommand {
-    fullName?: string | undefined;
-    email?: string | undefined;
-    phoneNumber?: string | undefined;
-    address?: string | undefined;
-    userName?: string | undefined;
-    password?: string | undefined;
-    userType?: UserType;
-    isActive?: boolean;
-    gender?: Gender;
-    dateOfBirth?: Date;
-    image?: string | undefined;
+    updateProduct(command: UpdateProductCommand): Observable<FileResponse> {
+        let url_ = this.baseUrl + "/api/Product/update-product";
+        url_ = url_.replace(/[?&]$/, "");
 
-    constructor(data?: ICreateApplicationUserCommand) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
+        const content_ = JSON.stringify(command);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateProduct(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateProduct(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileResponse>;
+        }));
+    }
+
+    protected processUpdateProduct(response: HttpResponseBase): Observable<FileResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
+            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
+            if (fileName) {
+                fileName = decodeURIComponent(fileName);
+            } else {
+                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
             }
+            return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
         }
+        return _observableOf<FileResponse>(null as any);
     }
 
-    init(_data?: any) {
-        if (_data) {
-            this.fullName = _data["fullName"];
-            this.email = _data["email"];
-            this.phoneNumber = _data["phoneNumber"];
-            this.address = _data["address"];
-            this.userName = _data["userName"];
-            this.password = _data["password"];
-            this.userType = _data["userType"];
-            this.isActive = _data["isActive"];
-            this.gender = _data["gender"];
-            this.dateOfBirth = _data["dateOfBirth"] ? new Date(_data["dateOfBirth"].toString()) : <any>undefined;
-            this.image = _data["image"];
+    deleteProduct(id: string): Observable<FileResponse> {
+        let url_ = this.baseUrl + "/api/Product/delete-product/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteProduct(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteProduct(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileResponse>;
+        }));
+    }
+
+    protected processDeleteProduct(response: HttpResponseBase): Observable<FileResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
+            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
+            if (fileName) {
+                fileName = decodeURIComponent(fileName);
+            } else {
+                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            }
+            return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
         }
-    }
-
-    static fromJS(data: any): CreateApplicationUserCommand {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateApplicationUserCommand();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["fullName"] = this.fullName;
-        data["email"] = this.email;
-        data["phoneNumber"] = this.phoneNumber;
-        data["address"] = this.address;
-        data["userName"] = this.userName;
-        data["password"] = this.password;
-        data["userType"] = this.userType;
-        data["isActive"] = this.isActive;
-        data["gender"] = this.gender;
-        data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toISOString() : <any>undefined;
-        data["image"] = this.image;
-        return data;
+        return _observableOf<FileResponse>(null as any);
     }
 }
 
-export interface ICreateApplicationUserCommand {
+export interface CreateApplicationUserCommand {
     fullName?: string | undefined;
     email?: string | undefined;
     phoneNumber?: string | undefined;
@@ -827,181 +859,23 @@ export enum Gender {
     Female = 2,
 }
 
-export class TokenResponse implements ITokenResponse {
-    token?: string | undefined;
-    expiryDate?: string | undefined;
-
-    constructor(data?: ITokenResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.token = _data["token"];
-            this.expiryDate = _data["expiryDate"];
-        }
-    }
-
-    static fromJS(data: any): TokenResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new TokenResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["token"] = this.token;
-        data["expiryDate"] = this.expiryDate;
-        return data;
-    }
-}
-
-export interface ITokenResponse {
+export interface TokenResponse {
     token?: string | undefined;
     expiryDate?: string | undefined;
 }
 
-export class AuthenticateRequest implements IAuthenticateRequest {
-    userName?: string | undefined;
-    password?: string | undefined;
-
-    constructor(data?: IAuthenticateRequest) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.userName = _data["userName"];
-            this.password = _data["password"];
-        }
-    }
-
-    static fromJS(data: any): AuthenticateRequest {
-        data = typeof data === 'object' ? data : {};
-        let result = new AuthenticateRequest();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["userName"] = this.userName;
-        data["password"] = this.password;
-        return data;
-    }
-}
-
-export interface IAuthenticateRequest {
+export interface AuthenticateRequest {
     userName?: string | undefined;
     password?: string | undefined;
 }
 
-export class CreateCategoryCommand implements ICreateCategoryCommand {
-    name?: string | undefined;
-    description?: string | undefined;
-    image?: string | undefined;
-
-    constructor(data?: ICreateCategoryCommand) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.name = _data["name"];
-            this.description = _data["description"];
-            this.image = _data["image"];
-        }
-    }
-
-    static fromJS(data: any): CreateCategoryCommand {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateCategoryCommand();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["description"] = this.description;
-        data["image"] = this.image;
-        return data;
-    }
-}
-
-export interface ICreateCategoryCommand {
+export interface CreateCategoryCommand {
     name?: string | undefined;
     description?: string | undefined;
     image?: string | undefined;
 }
 
-export class CreateOrderCommand implements ICreateOrderCommand {
-    amount?: number;
-    orderAddress?: string | undefined;
-    orderEmail?: string | undefined;
-    orderPhone?: string | undefined;
-    price?: number;
-    quantity?: number;
-    productId?: string;
-
-    constructor(data?: ICreateOrderCommand) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.amount = _data["amount"];
-            this.orderAddress = _data["orderAddress"];
-            this.orderEmail = _data["orderEmail"];
-            this.orderPhone = _data["orderPhone"];
-            this.price = _data["price"];
-            this.quantity = _data["quantity"];
-            this.productId = _data["productId"];
-        }
-    }
-
-    static fromJS(data: any): CreateOrderCommand {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateOrderCommand();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["amount"] = this.amount;
-        data["orderAddress"] = this.orderAddress;
-        data["orderEmail"] = this.orderEmail;
-        data["orderPhone"] = this.orderPhone;
-        data["price"] = this.price;
-        data["quantity"] = this.quantity;
-        data["productId"] = this.productId;
-        return data;
-    }
-}
-
-export interface ICreateOrderCommand {
+export interface CreateOrderCommand {
     amount?: number;
     orderAddress?: string | undefined;
     orderEmail?: string | undefined;
@@ -1011,54 +885,28 @@ export interface ICreateOrderCommand {
     productId?: string;
 }
 
-export class CreateProductCommand implements ICreateProductCommand {
+export interface ProductVm {
+    id?: string;
+    name?: string | undefined;
+    description?: string | undefined;
+    unitPrice?: number;
+    sellingUnitPrice?: number;
+    quantity?: number;
+    productStatus?: string | undefined;
+    createdBy?: string | undefined;
+}
+
+export interface CreateProductCommand {
     name?: string | undefined;
     description?: string | undefined;
     unitPrice?: number;
     sellingUnitPrice?: number;
     quantity?: number;
     image?: string | undefined;
-
-    constructor(data?: ICreateProductCommand) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.name = _data["name"];
-            this.description = _data["description"];
-            this.unitPrice = _data["unitPrice"];
-            this.sellingUnitPrice = _data["sellingUnitPrice"];
-            this.quantity = _data["quantity"];
-            this.image = _data["image"];
-        }
-    }
-
-    static fromJS(data: any): CreateProductCommand {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateProductCommand();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["description"] = this.description;
-        data["unitPrice"] = this.unitPrice;
-        data["sellingUnitPrice"] = this.sellingUnitPrice;
-        data["quantity"] = this.quantity;
-        data["image"] = this.image;
-        return data;
-    }
 }
 
-export interface ICreateProductCommand {
+export interface UpdateProductCommand {
+    id?: string;
     name?: string | undefined;
     description?: string | undefined;
     unitPrice?: number;

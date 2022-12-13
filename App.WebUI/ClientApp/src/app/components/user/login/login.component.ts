@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { AuthenticationRequest } from 'src/app/models/customer/authenticate-request';
+import { AuthService } from 'src/app/services/auth-service/auth-service.service';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() : void {
+    this._toastrService.info('Please wait....','info!');
     this.submitted = true;
     if(this.loginForm.invalid) return;
 
@@ -40,11 +41,11 @@ export class LoginComponent implements OnInit {
       password : this.loginForm.value.password
     };
     this._authService.login(request).subscribe(res=>{
-      this._toastrService.success('Logged in successfully!','Success!!!');
+      this._toastrService.success('Logged in successfully.','Success!');
       this._router.navigate(['']);   
     },err=>{
       console.log(err);
-      this._toastrService.error('Unauthorized user','Error!!!');
+      this._toastrService.error('Unauthorized user.','Error!');
     });
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './services/auth-service/auth-service.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,6 @@ export class AppComponent  implements OnInit{
 
   isLoggedIn$ : Observable<boolean>;
   constructor(private _authService: AuthService){
-   
     this._authService.showLoginPageIfTokenExpries();
   }
 

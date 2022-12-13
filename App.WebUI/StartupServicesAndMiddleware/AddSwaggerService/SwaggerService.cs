@@ -10,7 +10,6 @@ namespace App.WebUI.StartupServices.AddSwaggerService
             services.AddOpenApiDocument(configure =>
             {
                 configure.Title = "Clean Architecture Web API Project";
-                configure.Version = "v1";
                 configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
                 {
                     Type = OpenApiSecuritySchemeType.ApiKey,

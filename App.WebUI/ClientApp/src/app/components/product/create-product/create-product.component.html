@@ -1,0 +1,74 @@
+<div class="form-container">
+    <form [formGroup]="createProductForm" (ngSubmit)="onSubmitCreateProduct()">
+        <div class="row pb-2">
+            <div class="col-sm-4">
+                <label for="name"><b>Product Name <span style="color: red;">*</span></b> </label>
+                <input id="name" class="form-control" formControlName="name"
+                    [ngClass]="{ 'is-invalid': submitted && getFormControl.name.errors }"
+                    placeholder="Enter a Product Name">
+                    <div *ngIf="submitted && getFormControl.name.errors" class="invalid-feedback text-danger">
+                        <div *ngIf="getFormControl.name.errors?.required">Product Name is required.</div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label for="unitPrice"><b>Unit Price<span style="color: red;">*</span></b> </label>
+                    <input id="unitPrice" class="form-control" formControlName="unitPrice"
+                        [ngClass]="{ 'is-invalid': submitted && getFormControl.unitPrice.errors }"
+                        placeholder="Enter a Unit Price">
+                        <div *ngIf="submitted && getFormControl.unitPrice.errors" class="invalid-feedback text-danger">
+                            <div *ngIf="getFormControl.unitPrice.errors?.required">Unit Price is required.</div>
+                        </div>
+                 </div>
+                 <div class="col-sm-4">
+                    <label for="sellingUnitPrice"><b>Selling Unit Price<span style="color: red;">*</span></b> </label>
+                    <input id="sellingUnitPrice" class="form-control" formControlName="sellingUnitPrice"
+                        [ngClass]="{ 'is-invalid': submitted && getFormControl.sellingUnitPrice.errors }"
+                        placeholder="Enter a Selling Unit Price">
+                        <div *ngIf="submitted && getFormControl.sellingUnitPrice.errors" class="invalid-feedback text-danger">
+                            <div *ngIf="getFormControl.sellingUnitPrice.errors?.required">Selling Unit Price is required.</div>
+                        </div>
+                 </div>
+        </div>
+
+        <div class="row pb-2">
+            <div class="col-sm-4">
+                <label for="quantity"><b>Quantity<span style="color: red;">*</span></b> </label>
+                <input id="quantity" class="form-control" formControlName="quantity"
+                    [ngClass]="{ 'is-invalid': submitted && getFormControl.quantity.errors }"
+                    placeholder="Enter Quantity">
+                    <div *ngIf="submitted && getFormControl.quantity.errors" class="invalid-feedback text-danger">
+                        <div *ngIf="getFormControl.quantity.errors?.required">Quantity is required.</div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label for="description"><b>Description<span style="color: red;">*</span></b> </label>
+                    <textarea id="description" class="form-control" formControlName="description"
+                    [ngClass]="{ 'is-invalid': submitted && getFormControl.description.errors }"
+                    placeholder="Enter a Description"></textarea>
+                        <div *ngIf="submitted && getFormControl.description.errors" class="invalid-feedback text-danger">
+                            <div *ngIf="getFormControl.description.errors?.required">Description is required.</div>
+                        </div>
+                 </div>
+                 <div class="col-sm-4">
+                    <label for="name"><b>Image <span style="color: red;">*</span></b> </label>
+                    <input type="file" formControlName="image"/>
+                    <!-- <input type="file" formControlName="image"
+                    [ngClass]="{ 'is-invalid': submitted && getFormControl.image.errors }" />
+                        <div *ngIf="submitted && getFormControl.image.errors" class="invalid-feedback text-danger">
+                            <div *ngIf="getFormControl.image.errors?.required">Image is required.</div>
+                        </div>-->
+                 </div> 
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-4">
+               
+            </div>
+            <div class="col-sm-2 float-right">
+                <button type="submit" class="btn btn-warning">Create</button>
+            </div>
+            
+        </div>
+    </form>
+</div>

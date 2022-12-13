@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AccountService } from './web-api-clients';
 import jwt_decode from "jwt-decode";
+import { AccountService } from '../web-api-clients';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
 
-  constructor(private _accountService: AccountService) {
+  constructor(private _accountService: AccountService,
+              private _toastrService: ToastrService) {
     const token = localStorage.getItem('token');
     this._isLoggedIn$.next(!!token);
    }
@@ -50,8 +52,11 @@ export class AuthService {
 
   public isTokenExpired(): boolean {
     let rawToken = localStorage.getItem('token');
-    if (rawToken == null)
+    if (rawToken == null){
+      this._toastrService.info('You session has expired. Please login again.','Info')
       return true;
+    }
+      
 
     const date = this.getTokenExpirationDate();
     if (date === undefined) return false;

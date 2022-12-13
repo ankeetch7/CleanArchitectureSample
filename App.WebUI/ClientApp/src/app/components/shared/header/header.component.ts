@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth-service/auth-service.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class HeaderComponent implements OnInit {
   //for greeting
   greet: string ;
-  constructor(private _authService: AuthService) { }
+  constructor(private _authService: AuthService,
+              private _toastrService: ToastrService) { }
 
   ngOnInit(): void {
     var myDate = new Date();
@@ -30,6 +32,7 @@ export class HeaderComponent implements OnInit {
 
   logout() :void {
     this._authService.logout();
+    this._toastrService.info("Your are logged out.","Info!");
   }
 
   getUsername() : string {

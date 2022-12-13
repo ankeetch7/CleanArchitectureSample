@@ -1,20 +1,16 @@
 
-<div class="card d-flex bg-light" style="width: 30rem;margin-top: 10%;left: 31%;">
+<div class="card d-flex bg-light" style="width: 40rem;margin-top: 10%;left: 21%;">
         <div class="card-body justify-content-center align-items-center" style="padding: 2rem;">
             <div class="float-right">
                 <span class=""> <b> Login to continue your account</b> </span>
             </div>
             <br />
             <br />
-          <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <form class="float-right"  [formGroup]="loginForm" (ngSubmit)="onLogin()">
           
             <div class="row">
-                <div class="col-sm-6">
-                    <label for="username">
-                        <b>Username:</b> 
-                    </label>
-                </div>
-                <div class="col-sm-6">
+                <div class="col-sm-12">
+                    <label for="username"><b>Username:</b> </label>
                     <input type="text" id="username"
                     formControlName="username"
                     class="form-control" 
@@ -27,12 +23,11 @@
         <br />
 
             <div class="row">
-                <div class="col-sm-6">
+
+                <div class="col-sm-12">
                     <label for="password">
-                       <b>Password:</b> 
-                    </label>
-                </div>
-                <div class="col-sm-6">
+                        <b>Password:</b> 
+                     </label>
                     <input type="password" id="password"
                     formControlName="password"
                     class="form-control" 

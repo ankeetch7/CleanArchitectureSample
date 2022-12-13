@@ -19,29 +19,29 @@ namespace App.Infrastructure.Repositories
             _context = context;
             _entities = context.Set<TEntity>();
         }
-        public TEntity Add(TEntity entity)
+        public virtual TEntity Add(TEntity entity)
         {
              _entities.Add(entity);
             return entity;
         }
 
-        public IQueryable<TEntity> GetAll()
+        public virtual IQueryable<TEntity> GetAll()
         {
             return  _entities.AsQueryable();
         }
 
-        public TEntity GetById(Guid id)
+        public virtual TEntity GetById(Guid id)
         {
             return _entities.Find(id);
         }
 
-        public TEntity Update(TEntity entity)
+        public virtual TEntity Update(TEntity entity)
         {
             _entities.Update(entity);
             return entity;
         }
 
-        public Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
+        public virtual Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return null;
         }
